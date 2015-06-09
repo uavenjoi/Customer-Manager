@@ -4,7 +4,7 @@ angular.module('ordersModule',[
 .directive('orders',function(){
            return {
                restrict: 'E',
-               transclude: true,
+               //transclude: true,
                templateUrl: 'app/Components/orders.html'
            }
     });

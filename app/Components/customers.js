@@ -1,16 +1,12 @@
 angular.module('customersModule',[
     'mongodb-factory'
 ])
-    .directive('customers', function(mongolabFactory){
+    .directive('customers', function(mongolabFactory,$state){
         return {
             restrict:'E',
             transclude: true,
             templateUrl:'app/Components/customers.html',
             link:function($scope){
-                    $scope.filteredCustomers=[
-                    {id:1,city:'Sydney', gender:'male',firstName:'Mark', name:'KK',orderCount:1},
-                    {id:2,city:'New york', gender:'female',firstName:'Joe',name:'FF',orderCount:5}];
-
                 $scope.customers=mongolabFactory.query();
                 $scope.addCustomer=function(){
                     var item={id:3,
@@ -22,8 +18,13 @@ angular.module('customersModule',[
                     mongolabFactory.save(item).$promise.then(function(resource){
                         item.id=resource.id;
                         $scope.customers.push(item);
+                        $scope.isCreate=false;
                         console.log(resource);
                     });
+                };
+                $scope.deleteCustomer = function(customer){
+                    $scope.customers.splice($scope.customers.indexOf(customer), 1);
+                    mongolabFactory.remove({id:customer._id.$oid});
                 };
                 $scope.openEdit=function(customer){
                     console.log(customer);
@@ -45,13 +46,18 @@ angular.module('customersModule',[
                     $scope.isCreate=false;
                     $scope.isEdit=false;
                 }
+                $scope.viewOrders=function(customer){
+                    $state.go('detail',{id:customer._id.$oid});
+                }
             }
         }
     })
-.directive('createCustomer', function(){
+.directive('customer-detail1', function(){
       return{
           restrict:'E',
-          templateUrl:'app/Components/create/createCustomer.html'
+          transclude: true,
+          scope:true,
+          templateUrl:'app/Components/customer/customer-detail.html'
       }
 
     })

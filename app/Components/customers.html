@@ -53,26 +53,33 @@
     <div class="col-sm-6 col-md-4 col-lg-3" customer="customer"
          data-ng-repeat="customer in customers">
         <div class="card">
-            <button class="btn close cardClose" title="Delete Customer" ng-click="vm.deleteCustomer(customer.id)">&times;</button>
-            <div class="cardHeader"><a  ng-click="openEdit(customer)"
+            <button class="btn close cardClose" title="Delete Customer" ng-click="deleteCustomer(customer)">&times;</button>
+            <div class="cardHeader">
+                <a  ng-click="openEdit(customer)"
                                         href="#/customeredit"
                                        class="white">{{customer.firstName + ' ' + customer.lastName}}
-                <i class="icon-edit icon-white editIcon"></i></a></div>
+                <i class="icon-edit icon-white editIcon">
+                </i>
+                </a>
+            </div>
             <div class="cardBody">
                 <div class="clearfix">
                     <div class="pull-left cardBodyLeft">
                         <a ng-click="openEdit(customer)"
                            href="#/customeredit"
                            class="white">
-                            <img ng-src="Content/images/{{customer.gender | lowercase}}.png" class="cardImage" />
+                            <img ng-src="Content/images/{{customer.gender | lowercase}}.png"
+                                 class="cardImage" />
                         </a>
                     </div>
                     <div class="pull-left cardBodyRight">
                         <div class="cardBodyContent">{{customer.city}}, {{customer.name}}</div>
                         <div>
-                            <a href="#/customerorders/{{customer.id}}" class="btn-link">
+                            <a ng-click="viewOrders(customer)"
+                               class="btn-link">
                                 {{ customer.orderCount }}
-                                            <span ng-pluralize count="customer.orderCount" when="{'1': 'Order','other': 'Orders'}">
+                                            <span ng-pluralize count="customer.orderCount"
+                                                  when="{'1': 'Order','other': 'Orders'}">
                                             </span>
                             </a>
                         </div>

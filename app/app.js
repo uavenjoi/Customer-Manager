@@ -8,9 +8,8 @@ angular.module('CustomerManager',[
     'mongodb-factory',
     'headerModule',
     'customersModule',
-    'ordersModule',
-    'editModule',
-    'createModule'
+    'ordersModule'
+
 ]).config(function($stateProvider, $urlRouterProvider, mongolabFactoryProvider) {
     mongolabFactoryProvider.setConfigs({
         dataBase:'killerdb',
@@ -21,17 +20,13 @@ angular.module('CustomerManager',[
             url:'/customers',
             template:'<customers/>'
         })
-        //.state('customeredit',{
-        //    url:'/customeredit'//,
-        //   // template:'<editCustomer/>'
-        //})
-        .state('customerCreate',{
-            url:'/customerCreate',
-            template:'<createCustomer/>'
-        })
         .state('orders',{
             url:'/orders',
             template:'<orders/>'
+        })
+        .state('detail',{
+            url:'/detail/:id',
+            template:'<customer-detail/>'
         })
     $urlRouterProvider.otherwise('/');
 });

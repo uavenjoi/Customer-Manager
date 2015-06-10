@@ -26,7 +26,7 @@ angular.module('CustomerManager',[
         })
         .state('detail',{
             url:'/detail/:id',
-            template:'<customer-detail/>'
+            template:'<customerdetail/>'
         })
     $urlRouterProvider.otherwise('/');
 });

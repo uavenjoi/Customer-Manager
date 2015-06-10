@@ -1,31 +1,21 @@
 angular.module('customersModule',[
     'mongodb-factory'
 ])
-    .directive('customers', function(mongolabFactory,$state){
+    .directive('customers', function(mongolabFactory, customerFactory,$state){
         return {
             restrict:'E',
             transclude: true,
             templateUrl:'app/Components/customers.html',
             link:function($scope){
-                $scope.customers=mongolabFactory.query();
-                $scope.addCustomer=function(){
-                    var item={id:3,
-                        city:$scope.city,
-                        gender:'female',
-                        firstName:$scope.firstName,
-                        name:$scope.lastName,
-                        orderCount:45};
-                    mongolabFactory.save(item).$promise.then(function(resource){
-                        item.id=resource.id;
-                        $scope.customers.push(item);
-                        $scope.isCreate=false;
-                        console.log(resource);
-                    });
-                };
-                $scope.deleteCustomer = function(customer){
-                    $scope.customers.splice($scope.customers.indexOf(customer), 1);
-                    mongolabFactory.remove({id:customer._id.$oid});
-                };
+                $scope.isCreate=false;
+                if(!customerFactory.isLoad)
+                  customerFactory.loadCustomers();
+                $scope.customers=customerFactory.getCustomers();
+                $scope.services = customerFactory.getServices();
+                //console.log( $scope.customers);
+                //console.log( $scope.services.addCustomer);
+
+
                 $scope.openEdit=function(customer){
                     console.log(customer);
                     $scope.firstName=customer.firstName;
@@ -47,17 +37,36 @@ angular.module('customersModule',[
                     $scope.isEdit=false;
                 }
                 $scope.viewOrders=function(customer){
-                    $state.go('detail',{id:customer._id.$oid});
+                    $state.go('detail',{id:customer.id});
                 }
             }
         }
     })
-.directive('customer-detail1', function(){
+.directive('customerdetail', function($state,$stateParams, customerFactory){
       return{
+          //scope:true,
           restrict:'E',
           transclude: true,
-          scope:true,
-          templateUrl:'app/Components/customer/customer-detail.html'
-      }
+          templateUrl:'app/Components/customer/customer-detail.html',
+          link:function($scope){
 
+            $scope.services = customerFactory.getServices();
+              var id=$stateParams.id;
+            $scope.customer=$scope.services.getCustomerById(parseInt(id));
+            $scope.firstName=$scope.customer.firstName;
+
+            console.log($scope.customer);
+            console.log($scope.customer.orders);
+          }
+
+      }
+    })
+.directive('customerorders',function($state,customerFactory){
+        return{
+            scope:true,
+            templateUrl:'app/Components/customer/customer-orders.html',
+            link:function($scope){
+                $scope.services = customerFactory.getServices();
+            }
+        }
     })

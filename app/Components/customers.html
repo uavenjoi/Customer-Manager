@@ -26,22 +26,23 @@
     </div>
 </div>
 <div class="row">
-<div ng-show="isEdit || isCreate" class="col-sm-3">
+<div ng-init="customer={}" ng-show="isEdit || isCreate" class="col-sm-3">
     <div>{{currentAction}}</div>
     <div class="form-group">
         <label>First name:</label>
-        <input class="form-control" ng-model="firstName">
+        <input class="form-control" ng-model="customer.firstName">
     </div>
     <div class="form-group">
         <label>Last name:</label>
-        <input class="form-control" ng-model="lastName">
+        <input class="form-control" ng-model="customer.lastName">
     </div>
     <div class="form-group">
         <label>City :</label>
-        <input class="form-control" ng-model="city">
+        <input class="form-control" ng-model="customer.city">
     </div>
-    <button type="button" ng-show="isCreate" ng-click="addCustomer()" class="btn btn-info btn-lg">Create</button>
+    <button type="button" ng-show="isCreate" ng-click="services.addCustomer(customer); isCreate=false;" class="btn btn-info btn-lg">Create</button>
     <button type="button" ng-show="isEdit" class="btn btn-info btn-lg">Edit</button>
+    <!--<button class="btn btn-success" ng-click="service.addOrder(order)">Add</button>-->
     <button type="button" class="btn btn-default btn-lg pull-right"
             ng-click="cancelCreate()">
         Cancel
@@ -53,7 +54,9 @@
     <div class="col-sm-6 col-md-4 col-lg-3" customer="customer"
          data-ng-repeat="customer in customers">
         <div class="card">
-            <button class="btn close cardClose" title="Delete Customer" ng-click="deleteCustomer(customer)">&times;</button>
+            <button class="btn close cardClose"
+                    title="Delete Customer"
+                    ng-click="services.deleteCustomer(customer)">&times;</button>
             <div class="cardHeader">
                 <a  ng-click="openEdit(customer)"
                                         href="#/customeredit"
@@ -75,7 +78,7 @@
                     <div class="pull-left cardBodyRight">
                         <div class="cardBodyContent">{{customer.city}}, {{customer.name}}</div>
                         <div>
-                            <a ng-click="viewOrders(customer)"
+                            <a ui-sref="detail({id:customer.id})"
                                class="btn-link">
                                 {{ customer.orderCount }}
                                             <span ng-pluralize count="customer.orderCount"

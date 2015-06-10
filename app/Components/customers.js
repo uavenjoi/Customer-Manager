@@ -44,7 +44,6 @@ angular.module('customersModule',[
     })
 .directive('customerdetail', function($state,$stateParams, customerFactory){
       return{
-          //scope:true,
           restrict:'E',
           transclude: true,
           templateUrl:'app/Components/customer/customer-detail.html',
@@ -68,5 +67,26 @@ angular.module('customersModule',[
             link:function($scope){
                 $scope.services = customerFactory.getServices();
             }
+        }
+    })
+.directive('orders',function(mongolabFactory,customerFactory){
+    return {
+        scope:true,
+        templateUrl: 'app/Components/orders.html',
+        link:function($scope){
+            $scope.customers=customerFactory.getCustomers();
+            $scope.services = customerFactory.getServices();
+        }
+    }
+})
+
+.filter('totalSum', function(){
+        return function(customer){
+            if (typeof customer === 'undefined')  return;
+            var sum = 0;
+            customer.forEach(function(_o){
+                sum = sum + ((_o.price || 0) * (_o.count || 0));
+            });
+            return sum;
         }
     })

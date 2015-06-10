@@ -7,8 +7,8 @@ angular.module('CustomerManager',[
     'ui.bootstrap',
     'mongodb-factory',
     'headerModule',
-    'customersModule',
-    'ordersModule'
+    'customersModule'
+    //,'ordersModule'
 
 ]).config(function($stateProvider, $urlRouterProvider, mongolabFactoryProvider) {
     mongolabFactoryProvider.setConfigs({

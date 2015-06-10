@@ -1,10 +1,14 @@
 angular.module('ordersModule',[
     'mongodb-factory'
 ])
-.directive('orders',function(){
+.directive('orders',function(mongolabFactory,customerFactory){
            return {
                restrict: 'E',
-               //transclude: true,
-               templateUrl: 'app/Components/orders.html'
+               transclude: true,
+               templateUrl: 'app/Components/orders.html',
+               link:function($scope){
+                   $scope.customers=customerFactory.getCustomers();
+                   $scope.services = customerFactory.getServices();
+               }
            }
     });

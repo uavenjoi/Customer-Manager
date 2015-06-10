@@ -28,8 +28,7 @@ angular.module('mongodb-factory',['ngResource'])
                 gender:'female',
                 firstName:customer.firstName,
                 name:customer.lastName,
-                orders:[],
-                orderCount:0};
+                orders:[]};
             mongolabFactory.save(item).$promise.then(function(resource){
                 item.id=resource.id;
                 customers.push(item);
@@ -56,10 +55,10 @@ angular.module('mongodb-factory',['ngResource'])
             order.id=1;
             var customer=angular.copy(this);
             currentCustomer.orders.push(angular.copy(order));
-           //customer.orders.push(angular.copy(order));
-            mongolabFactory.update({id:currentCustomer._id.$oid}, currentCustomer).$promise.then(function(){
-                currentCustomer.orders.push(angular.copy(order));
-            })
+            mongolabFactory.update({id:currentCustomer._id.$oid}, currentCustomer)
+            //    .$promise.then(function(){
+            //    currentCustomer.orders.push(angular.copy(order));
+            //})
         }
 
         var services={

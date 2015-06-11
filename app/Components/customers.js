@@ -46,8 +46,8 @@ angular.module('customersModule',[
             $scope.firstName=$scope.customer.firstName;
               $scope.addOrder=function(){
                   console.log($scope.customer);
-                  $scope.isCreateOrder=true;
 
+                  customerFactory.setCurrentOrder(null);
               }
             console.log($scope.customer);
             console.log($scope.customer.orders);
@@ -74,6 +74,8 @@ angular.module('customersModule',[
                 $scope.services = customerFactory.getServices();
 
                 $scope.order = customerFactory.getCurrentOrder();
+                $scope.isEditOrder= $scope.order? true: false;
+
                 $scope.editOrder = function() {
                     customerFactory.setCurrentOrder(null);
                 }

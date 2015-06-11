@@ -13,12 +13,14 @@
             <input class="form-control" ng-model="order.price"/>
         </div>
         <button class="btn btn-success"
+                ng-show="!isEditOrder"
                 ng-click="services.addOrder(order);"
                 ui-sref="detail({id:customerId})">
             Add
         </button>
         <button class="btn btn-success"
-                ng-click="editOrder()"
+                ng-show="isEditOrder"
+                ng-click="editOrder(); isEditOrder=false"
                 ui-sref="detail({id:customerId})">
             Edit
         </button>

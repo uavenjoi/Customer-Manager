@@ -11,4 +11,13 @@ angular.module('ordersModule',[
                    $scope.services = customerFactory.getServices();
                }
            }
-    });
+    })
+//.directive('editOrder',function(){
+//    return{
+//        restrict:'E',
+//        templateUrl:'app/Components/edit/edit.html',
+//        link:function($scope){
+//
+//        }
+//    }
+//})

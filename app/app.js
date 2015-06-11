@@ -7,8 +7,8 @@ angular.module('CustomerManager',[
     'ui.bootstrap',
     'mongodb-factory',
     'headerModule',
-    'customersModule'
-    //,'ordersModule'
+    'customersModule',
+    ,'ordersModule'
 
 ]).config(function($stateProvider, $urlRouterProvider, mongolabFactoryProvider) {
     mongolabFactoryProvider.setConfigs({
@@ -21,12 +21,16 @@ angular.module('CustomerManager',[
             template:'<customers/>'
         })
         .state('orders',{
-            url:'/orders',
+            url:'/orders/:id',
             template:'<orders/>'
         })
         .state('detail',{
             url:'/detail/:id',
             template:'<customerdetail/>'
+        })
+        .state('editOrder',{
+            url:'/editOrder/:customerId',
+            template:'<editorder/>'
         })
     $urlRouterProvider.otherwise('/');
 });

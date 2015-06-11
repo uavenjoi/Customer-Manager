@@ -52,20 +52,22 @@ angular.module('mongodb-factory',['ngResource'])
         };
 
         var addOrder=function(order){
-            order.id=1;
-            var customer=angular.copy(this);
+            order.id=currentCustomer.orders.length;
+          //  var customer=angular.copy(this);
             currentCustomer.orders.push(angular.copy(order));
-            mongolabFactory.update({id:currentCustomer._id.$oid}, currentCustomer)
-            //    .$promise.then(function(){
-            //    currentCustomer.orders.push(angular.copy(order));
-            //})
+            mongolabFactory.update({id:currentCustomer._id.$oid}, currentCustomer);
+        }
+        var removeOrder=function(order){
+            currentCustomer.orders.splice(currentCustomer.orders.indexOf(order), 1);
+            mongolabFactory.update({id:currentCustomer._id.$oid},currentCustomer);
         }
 
         var services={
             addCustomer:addCustomer,
             deleteCustomer:deleteCustomer,
             getCustomerById:getCustomerById,
-            addOrder:addOrder
+            addOrder:addOrder,
+            removeOrder:removeOrder
         }
 
         this.isLoad=false;

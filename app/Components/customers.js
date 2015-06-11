@@ -12,33 +12,32 @@ angular.module('customersModule',[
                   customerFactory.loadCustomers();
                 $scope.customers=customerFactory.getCustomers();
                 $scope.services = customerFactory.getServices();
+                $scope.customer={};
                 //console.log( $scope.customers);
                 //console.log( $scope.services.addCustomer);
 
-
                 $scope.openEdit=function(customer){
                     console.log(customer);
-                    $scope.firstName=customer.firstName;
-                    $scope.lastName=customer.name;
-                    $scope.city=customer.city;
+                    $scope.customer.firstName=customer.firstName;
+                    $scope.customer.lastName=customer.name;
+                    $scope.customer.city=customer.city;
                     $scope.isEdit=true;
                     $scope.currentAction='Edit customer';
                     $scope.editedCustomer={}
                 };
                 $scope.openCreate=function(){
-                    $scope.firstName="";
-                    $scope.lastName="";
-                    $scope.city="";
-                    $scope.isCreate=true;
+                    $scope.customer.firstName="";
+                    $scope.customer.lastName="";
+                    $scope.customer.city="";
                     $scope.currentAction='Create customer';
                 };
-                $scope.cancelCreate=function(){
-                    $scope.isCreate=false;
-                    $scope.isEdit=false;
-                }
-                $scope.viewOrders=function(customer){
-                    $state.go('detail',{id:customer.id});
-                }
+                //$scope.cancelCreate=function(){
+                //    $scope.isCreate=false;
+                //    $scope.isEdit=false;
+                //}
+                //$scope.viewOrders=function(customer){
+                //    $state.go('detail',{id:customer.id});
+                //}
             }
         }
     })
@@ -53,6 +52,11 @@ angular.module('customersModule',[
               var id=$stateParams.id;
             $scope.customer=$scope.services.getCustomerById(parseInt(id));
             $scope.firstName=$scope.customer.firstName;
+              $scope.addOrder=function(){
+                  console.log($scope.customer);
+                  $scope.isCreateOrder=true;
+              }
+
 
             console.log($scope.customer);
             console.log($scope.customer.orders);
@@ -66,6 +70,13 @@ angular.module('customersModule',[
             templateUrl:'app/Components/customer/customer-orders.html',
             link:function($scope){
                 $scope.services = customerFactory.getServices();
+
+                $scope.editOrder=function(order){
+                    console.log(order);
+                    $scope.order.name=order.name;
+                    $scope.order.count=order.count;
+                    $scope.order.price=order.price;
+                }
             }
         }
     })
@@ -76,10 +87,24 @@ angular.module('customersModule',[
         link:function($scope){
             $scope.customers=customerFactory.getCustomers();
             $scope.services = customerFactory.getServices();
+
+
         }
     }
 })
-
+.directive('editorder',function($state,$stateParams, customerFactory){
+    return{
+        restrict:'E',
+        transclude: true,
+        templateUrl:'app/Components/edit/edit.html',
+        link:function($scope){
+            $scope.customerId=$stateParams.customerId;
+            console.log($scope.customerId);
+            $scope.customers=customerFactory.getCustomers();
+            $scope.services = customerFactory.getServices();
+        }
+    }
+})
 .filter('totalSum', function(){
         return function(customer){
             if (typeof customer === 'undefined')  return;

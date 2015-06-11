@@ -32,7 +32,7 @@
     </div>
     <div class="form-group">
         <label>Last name:</label>
-        <input class="form-control" ng-model="customer.lastName">
+        <input class="form-control" ng-model="customer.name">
     </div>
     <div class="form-group">
         <label>City :</label>
@@ -43,8 +43,10 @@
             class="btn btn-info btn-lg">Create</button>
     <button type="button"
             ng-show="isEdit"
+            ng-click="services.updateCustomer(customer);isEdit=false;"
             class="btn btn-info btn-lg">Edit</button>
-    <button type="button" class="btn btn-default btn-lg pull-right"
+    <button type="button"
+            class="btn btn-default btn-lg pull-right"
             ng-click="isCreate=false; isEdit=false">
         Cancel
     </button>
@@ -61,7 +63,7 @@
             <div class="cardHeader">
                 <a  ng-click="openEdit(customer); isEdit=true"
                                         href="#/customeredit"
-                                       class="white">{{customer.firstName + ' ' + customer.lastName}}
+                                       class="white">{{customer.firstName + ' ' + customer.name}}
                 <i class="icon-edit icon-white editIcon">
                 </i>
                 </a>
@@ -77,7 +79,7 @@
                         </a>
                     </div>
                     <div class="pull-left cardBodyRight">
-                        <div class="cardBodyContent">{{customer.city}}, {{customer.name}}</div>
+                        <div class="cardBodyContent">City: {{customer.city}}</div>
                         <div>
                             <a ui-sref="detail({id:customer.id})"
                                class="btn-link">

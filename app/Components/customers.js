@@ -13,14 +13,10 @@ angular.module('customersModule',[
                 $scope.customers=customerFactory.getCustomers();
                 $scope.services = customerFactory.getServices();
                 $scope.customer={};
-                //console.log( $scope.customers);
-                //console.log( $scope.services.addCustomer);
 
                 $scope.openEdit=function(customer){
                     console.log(customer);
-                    $scope.customer.firstName=customer.firstName;
-                    $scope.customer.lastName=customer.name;
-                    $scope.customer.city=customer.city;
+                    $scope.customer=customer;
                     $scope.isEdit=true;
                     $scope.currentAction='Edit customer';
                     $scope.editedCustomer={}
@@ -34,9 +30,6 @@ angular.module('customersModule',[
                 //$scope.cancelCreate=function(){
                 //    $scope.isCreate=false;
                 //    $scope.isEdit=false;
-                //}
-                //$scope.viewOrders=function(customer){
-                //    $state.go('detail',{id:customer.id});
                 //}
             }
         }
@@ -67,10 +60,6 @@ angular.module('customersModule',[
             templateUrl:'app/Components/customer/customer-orders.html',
             link:function($scope){
                 $scope.services = customerFactory.getServices();
-                //$scope.editOrder=function(order){
-                //    console.log(order);
-                //    customerFactory.setCurrentOrder(null);
-                // }
             }
         }
     })
@@ -82,7 +71,6 @@ angular.module('customersModule',[
             templateUrl: 'app/Components/edit/edit.html',
             link: function ($scope) {
                 $scope.customerId = $stateParams.customerId;
-                // $scope.customers=customerFactory.getCustomers();
                 $scope.services = customerFactory.getServices();
 
                 $scope.order = customerFactory.getCurrentOrder();

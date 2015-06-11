@@ -16,6 +16,10 @@ angular.module('CustomerManager',[
         apiKey:'lb2kRL5a6FkRwkH3vOSAOuPUUDhtCYJ2'
     });
     $stateProvider
+        .state('index',{
+            url:'/',
+            template:'<customers/>'
+        })
         .state('customers',{
             url:'/customers',
             template:'<customers/>'

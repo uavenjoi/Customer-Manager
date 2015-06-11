@@ -1,4 +1,6 @@
-angular.module('mongodb-factory',['ngResource'])
+angular.module('mongodb-factory',[
+    'ngResource'
+])
 
     .provider('mongolabFactory', function (mongolabConfigs) {
         this.setConfigs = function (_mongolabConfigs) {
@@ -24,12 +26,14 @@ angular.module('mongodb-factory',['ngResource'])
         var currentCustomer={};
         var currentOrder={};
         var addCustomer=function(customer){
-            var item={id:customers.length,
+            var item={
+                id: new Date().getTime(),
                 city:customer.city,
                 gender:'female',
                 firstName:customer.firstName,
-                name:customer.lastName,
-                orders:[]};
+                name:customer.name,
+                orders:[]
+            };
             mongolabFactory.save(item).$promise.then(function(resource){
                 item.id=resource.id;
                 customers.push(item);
@@ -41,7 +45,7 @@ angular.module('mongodb-factory',['ngResource'])
             mongolabFactory.remove({id:customer._id.$oid});
         };
         var updateCustomer= function(customer){
-            mongolabFactory.update({id:customer._id.$oid}, customer);
+            mongolabFactory.update({id:currentCustomer._id.$oid}, customer);
         }
         var getCustomerById = function(id){
           var _customer={};
@@ -54,7 +58,7 @@ angular.module('mongodb-factory',['ngResource'])
             return _customer;
         };
         var addOrder=function(order){
-            order.id=currentCustomer.orders.length;
+            order.id=new Date().getTime();
             currentCustomer.orders.push(angular.copy(order));
             mongolabFactory.update({id:currentCustomer._id.$oid}, currentCustomer);
             currentOrder=null;

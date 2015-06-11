@@ -1,21 +1,16 @@
-<nav class="container">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <a href="#/">
-            <img src="Content/images/people.png" alt="logo">
-            <span >{{ appTitle }}</span>
-        </a>
-    </div>
-    <div class="nav-container" data-collapse="isCollapsed">
-        <ul class="nav navbar-nav nav-pills navBarPadding"
-            data-menu-highlighter data-highlight-class-name="active">
-            <li><a ng-class="{'active': active === 'customers'}" href="#/customers">Customers</a></li>
-            <li><a ng-class="{'active': active === 'orders'}" href="#/orders">Orders</a></li>
-        </ul>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="#/">
+                <img src="Content/images/people.png" alt="logo">
+                <span >{{ appTitle }}</span>
+            </a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav nav-pills navBarPadding" data-menu-highlighter data-highlight-class-name="active">
+                <li><a ng-class="{'active': active === 'customers'}" href="#/customers">Customers</a></li>
+                <li><a ng-class="{'active': active === 'orders'}" href="#/orders">Orders</a></li>
+            </ul>
+        </div>
     </div>
 </nav>

@@ -16,6 +16,7 @@ angular.module('customersModule',[
 
                 $scope.openEdit=function(customer){
                     console.log(customer);
+                    $scope.services.getCustomerById(customer.id);
                     $scope.customer=customer;
                     $scope.isEdit=true;
                     $scope.currentAction='Edit customer';
@@ -23,14 +24,10 @@ angular.module('customersModule',[
                 };
                 $scope.openCreate=function(){
                     $scope.customer.firstName="";
-                    $scope.customer.lastName="";
+                    $scope.customer.name="";
                     $scope.customer.city="";
                     $scope.currentAction='Create customer';
                 };
-                //$scope.cancelCreate=function(){
-                //    $scope.isCreate=false;
-                //    $scope.isEdit=false;
-                //}
             }
         }
     })
@@ -46,7 +43,6 @@ angular.module('customersModule',[
             $scope.firstName=$scope.customer.firstName;
               $scope.addOrder=function(){
                   console.log($scope.customer);
-
                   customerFactory.setCurrentOrder(null);
               }
             console.log($scope.customer);
@@ -60,10 +56,14 @@ angular.module('customersModule',[
             templateUrl:'app/Components/customer/customer-orders.html',
             link:function($scope){
                 $scope.services = customerFactory.getServices();
+                $scope.removeOrder=function(customer,order){
+                    $scope.services.getCustomerById(customer.id)
+                    $scope.services.removeOrder(order);
+
+                }
             }
         }
     })
-
 .directive('editorder',function($state,$stateParams, customerFactory) {
         return {
             restrict: 'E',

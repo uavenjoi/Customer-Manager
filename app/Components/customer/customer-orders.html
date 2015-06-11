@@ -19,7 +19,8 @@
                 <div class="col-md-2">
                     <div class="btn btn-info">
                         <a class="glyphicon glyphicon-pencil"
-                              ui-sref="editOrder({id:order.id})">
+                           ng-click="services.setCurrentOrder(order)"
+                              ui-sref="editOrder({customerId:customer.id, orderId:order.id})">
                            </a>
                     </div>
                     <div class="btn btn-danger">

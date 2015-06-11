@@ -22,6 +22,7 @@ angular.module('mongodb-factory',['ngResource'])
     .factory('customerFactory',function(mongolabFactory){
         var customers=[];
         var currentCustomer={};
+        var currentOrder={};
         var addCustomer=function(customer){
             var item={id:customers.length,
                 city:customer.city,
@@ -53,13 +54,21 @@ angular.module('mongodb-factory',['ngResource'])
 
         var addOrder=function(order){
             order.id=currentCustomer.orders.length;
-          //  var customer=angular.copy(this);
             currentCustomer.orders.push(angular.copy(order));
             mongolabFactory.update({id:currentCustomer._id.$oid}, currentCustomer);
+            currentOrder=null;
         }
         var removeOrder=function(order){
             currentCustomer.orders.splice(currentCustomer.orders.indexOf(order), 1);
             mongolabFactory.update({id:currentCustomer._id.$oid},currentCustomer);
+        }
+
+        var updateOrder=function(order){
+            currentOrder=order;
+        }
+
+        var setCurrentOrder=function(order){
+            currentOrder=order;
         }
 
         var services={
@@ -67,7 +76,9 @@ angular.module('mongodb-factory',['ngResource'])
             deleteCustomer:deleteCustomer,
             getCustomerById:getCustomerById,
             addOrder:addOrder,
-            removeOrder:removeOrder
+            removeOrder:removeOrder,
+            setCurrentOrder:setCurrentOrder,
+            updateOrder:updateOrder
         }
 
         this.isLoad=false;
@@ -93,6 +104,12 @@ angular.module('mongodb-factory',['ngResource'])
                      me.isLoad=true;
                     return customers;
                 })
+            },
+            setCurrentOrder:function(order){
+              setCurrentOrder(order)
+            },
+            getCurrentOrder:function(){
+              return currentOrder;
             }
 
         }

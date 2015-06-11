@@ -47,7 +47,6 @@ angular.module('customersModule',[
           transclude: true,
           templateUrl:'app/Components/customer/customer-detail.html',
           link:function($scope){
-
             $scope.services = customerFactory.getServices();
               var id=$stateParams.id;
             $scope.customer=$scope.services.getCustomerById(parseInt(id));
@@ -55,13 +54,11 @@ angular.module('customersModule',[
               $scope.addOrder=function(){
                   console.log($scope.customer);
                   $scope.isCreateOrder=true;
+
               }
-
-
             console.log($scope.customer);
             console.log($scope.customer.orders);
           }
-
       }
     })
 .directive('customerorders',function($state,customerFactory){
@@ -70,41 +67,31 @@ angular.module('customersModule',[
             templateUrl:'app/Components/customer/customer-orders.html',
             link:function($scope){
                 $scope.services = customerFactory.getServices();
+                //$scope.editOrder=function(order){
+                //    console.log(order);
+                //    customerFactory.setCurrentOrder(null);
+                // }
+            }
+        }
+    })
 
-                $scope.editOrder=function(order){
-                    console.log(order);
-                    $scope.order.name=order.name;
-                    $scope.order.count=order.count;
-                    $scope.order.price=order.price;
+.directive('editorder',function($state,$stateParams, customerFactory) {
+        return {
+            restrict: 'E',
+            transclude: true,
+            templateUrl: 'app/Components/edit/edit.html',
+            link: function ($scope) {
+                $scope.customerId = $stateParams.customerId;
+                // $scope.customers=customerFactory.getCustomers();
+                $scope.services = customerFactory.getServices();
+
+                $scope.order = customerFactory.getCurrentOrder();
+                $scope.editOrder = function() {
+                    customerFactory.setCurrentOrder(null);
                 }
             }
         }
     })
-.directive('orders',function(mongolabFactory,customerFactory){
-    return {
-        scope:true,
-        templateUrl: 'app/Components/orders.html',
-        link:function($scope){
-            $scope.customers=customerFactory.getCustomers();
-            $scope.services = customerFactory.getServices();
-
-
-        }
-    }
-})
-.directive('editorder',function($state,$stateParams, customerFactory){
-    return{
-        restrict:'E',
-        transclude: true,
-        templateUrl:'app/Components/edit/edit.html',
-        link:function($scope){
-            $scope.customerId=$stateParams.customerId;
-            console.log($scope.customerId);
-            $scope.customers=customerFactory.getCustomers();
-            $scope.services = customerFactory.getServices();
-        }
-    }
-})
 .filter('totalSum', function(){
         return function(customer){
             if (typeof customer === 'undefined')  return;

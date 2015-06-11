@@ -21,7 +21,7 @@ angular.module('CustomerManager',[
             template:'<customers/>'
         })
         .state('orders',{
-            url:'/orders/:id',
+            url:'/orders',
             template:'<orders/>'
         })
         .state('detail',{
@@ -29,7 +29,7 @@ angular.module('CustomerManager',[
             template:'<customerdetail/>'
         })
         .state('editOrder',{
-            url:'/editOrder/:customerId',
+            url:'/editOrder/:customerId/:orderId',
             template:'<editorder/>'
         })
     $urlRouterProvider.otherwise('/');

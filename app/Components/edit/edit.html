@@ -1,5 +1,5 @@
 <div class="row">
-    <div ng-init="order={}" class="col-lg-5">
+    <div  class="col-lg-5">
         <div class="form-group">
             <label>Product name</label>
             <input class="form-control" ng-model="order.name"/>
@@ -13,6 +13,14 @@
             <input class="form-control" ng-model="order.price"/>
         </div>
         <button class="btn btn-success"
-                ng-click="services.addOrder(order);" ui-sref="detail({id:customerId})">Add</button>
+                ng-click="services.addOrder(order);"
+                ui-sref="detail({id:customerId})">
+            Add
+        </button>
+        <button class="btn btn-success"
+                ng-click="editOrder()"
+                ui-sref="detail({id:customerId})">
+            Edit
+        </button>
     </div>
 </div>

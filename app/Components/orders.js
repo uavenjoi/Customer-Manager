@@ -12,12 +12,35 @@ angular.module('ordersModule',[
                }
            }
     })
-//.directive('editOrder',function(){
-//    return{
-//        restrict:'E',
-//        templateUrl:'app/Components/edit/edit.html',
-//        link:function($scope){
-//
-//        }
-//    }
-//})
+    .directive('customerorders',function($state,customerFactory){
+        return{
+            scope:true,
+            templateUrl:'app/Components/customer/customer-orders.html',
+            link:function($scope){
+                $scope.services = customerFactory.getServices();
+                $scope.removeOrder=function(customer,order){
+                    $scope.services.getCustomerById(customer.id)
+                    $scope.services.removeOrder(order);
+
+                }
+            }
+        }
+    })
+    .directive('editorder',function($state,$stateParams, customerFactory) {
+        return {
+            restrict: 'E',
+            transclude: true,
+            templateUrl: 'app/Components/edit/edit.html',
+            link: function ($scope) {
+                $scope.customerId = $stateParams.customerId;
+                $scope.services = customerFactory.getServices();
+
+                $scope.order = customerFactory.getCurrentOrder();
+                $scope.isEditOrder= $scope.order? true: false;
+
+                $scope.editOrder = function() {
+                    customerFactory.setCurrentOrder(null);
+                }
+            }
+        }
+    })

@@ -44,3 +44,13 @@ angular.module('ordersModule',[
             }
         }
     })
+    .filter('totalSum', function(){
+        return function(customer){
+            if (typeof customer === 'undefined')  return;
+            var sum = 0;
+            customer.forEach(function(_o){
+                sum = sum + ((_o.price || 0) * (_o.count || 0));
+            });
+            return sum;
+        }
+    })
